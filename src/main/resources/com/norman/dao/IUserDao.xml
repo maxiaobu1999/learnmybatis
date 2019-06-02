@@ -23,7 +23,7 @@
     </select>
 
     <!-- 保存用户 -->
-    <insert id="saveUser" parameterType="com.norman.domain.User" >
+    <insert id="saveUser" parameterType="user" >
         <!-- 配置插入操作后，获取插入数据的id -->
         <!-- 新增用户后，同时还要返回当前新增用户的 id 值，因为 id 是由数据库的自动增长来实现的，所以就相 当于我们要在新增后将自动增长 auto_increment 的值返回。 -->
         <selectKey keyProperty="userId" keyColumn="id" resultType="int" order="AFTER">
@@ -33,7 +33,7 @@
     </insert>
 
     <!-- 更新用户 -->
-    <update id="updateUser" parameterType="com.norman.domain.User">
+    <update id="updateUser" parameterType="User">
         update user set username=#{userName},address=#{address},sex=#{sex},birthday=#{birthday} where id=#{userId}
     </update>
     <!-- 删除用户-->
