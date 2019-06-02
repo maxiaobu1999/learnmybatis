@@ -33,7 +33,7 @@ public class MybatisTest {
         //2.获取SqlSessionFactory
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(in);
         //3.获取SqlSession对象
-        sqlSession = factory.openSession();
+        sqlSession = factory.openSession(true);//true自动提交事务
         //4.获取dao的代理对象
         userDao = sqlSession.getMapper(IUserDao.class);
     }
@@ -41,7 +41,7 @@ public class MybatisTest {
     @After//用于在测试方法执行之后执行
     public void destroy()throws Exception{
         //提交事务
-        sqlSession.commit();
+//        sqlSession.commit();
         //6.释放资源
         sqlSession.close();
         in.close();
