@@ -9,26 +9,27 @@ import java.util.Date;
  */
 public class User implements Serializable{
 
-    private Integer id;
-    private String username;
+
+
+    private Integer userId;
+    private String userName;
     private Date birthday;
     private String sex;
     private String address;
 
-    public Integer getId() {
-        return id;
+
+    public String getUserName() {
+        return userName;
+    }
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String username) {
+        this.userName = username;
     }
 
     public Date getBirthday() {
@@ -58,8 +59,8 @@ public class User implements Serializable{
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "id=" + userId +
+                ", username='" + userName + '\'' +
                 ", birthday=" + birthday +
                 ", sex='" + sex + '\'' +
                 ", address='" + address + '\'' +

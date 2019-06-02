@@ -69,7 +69,18 @@ public class MybatisTest {
 //        session.close();
 //        in.close();
 //    }
+    /**
+     * 测试查询所有
+     */
+    @Test
+    public void testFindAll(){
+        //5.执行查询所有方法
+        List<User> users = userDao.findAll();
+        for(User user : users){
+            System.out.println(user);
+        }
 
+    }
     /**
      * 增
      * 测试保存操作
@@ -77,7 +88,7 @@ public class MybatisTest {
     @Test
     public void testSave(){
         User user = new User();
-        user.setUsername("modify User property");
+        user.setUserName("modify User property");
         user.setAddress("北京市顺义区");
         user.setSex("男");
         user.setBirthday(new Date());
@@ -95,8 +106,8 @@ public class MybatisTest {
     @Test
     public void testUpdate(){
         User user = new User();
-        user.setId(50);
-        user.setUsername("mybastis update user");
+        user.setUserId(50);
+        user.setUserName("mybastis update user");
         user.setAddress("北京市顺义区");
         user.setSex("女");
         user.setBirthday(new Date());
@@ -153,7 +164,7 @@ public class MybatisTest {
     public void testFindByVo(){
         QueryVo vo = new QueryVo();
         User user = new User();
-        user.setUsername("%王%");
+        user.setUserName("%王%");
         vo.setUser(user);
         //5.执行查询一个方法
         List<User> users = userDao.findUserByVo(vo);
