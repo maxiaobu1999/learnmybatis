@@ -23,6 +23,8 @@
 
     <!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 -->
     <mappers>
-        <mapper class="com.norman.dao.IUserDao"/>
+        <mapper resource="com/norman/dao/IUserDao.xml"/>
+        <!-- package标签是用于指定dao接口所在的包,当指定了之后就不需要在写mapper以及resource或者class了 -->
+<!--        <mapper class="com.norman.dao.IUserDao"/>-->
     </mappers>
 </configuration>
