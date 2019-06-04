@@ -2,13 +2,13 @@ package com.norman.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 黑马程序员
  * @Company http://www.ithiema.com
  */
-public class User implements Serializable{
-
+public class User implements Serializable {
 
 
     private Integer userId;
@@ -17,10 +17,21 @@ public class User implements Serializable{
     private String sex;
     private String address;
 
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    //一对多关系映射：主表实体应该包含从表实体的集合引用
+    private List<Account> accounts;
 
     public String getUserName() {
         return userName;
     }
+
     public Integer getUserId() {
         return userId;
     }
@@ -28,6 +39,7 @@ public class User implements Serializable{
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
     public void setUserName(String username) {
         this.userName = username;
     }

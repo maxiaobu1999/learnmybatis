@@ -15,14 +15,32 @@
         <result property="sex" column="sex"></result>
         <result property="birthday" column="birthday"></result>
     </resultMap>
+    <!-- 定义User的resultMap 多表一对多-->
+    <resultMap id="userAccountMap" type="user">
+        <id property="userId" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <!-- 配置user对象中accounts集合的映射 ofType="account"集合中元素的类型-->
+        <collection property="accounts" ofType="account">
+            <id column="aid" property="id"></id>
+            <result column="uid" property="uid"></result>
+            <result column="money" property="money"></result>
+        </collection>
+    </resultMap>
     <!--配置查询所有-->
-    <select id="findAll" resultMap="userMap">
+    <select id="findAll" resultMap="userAccountMap">
         <!--  起别名解决实体属性与数据库列名不一致 方法1  -->
         <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
-        select * from user
-    </select>
+        <!-- u left outer :做外链接，返回左表u的所有属性 -->
+        <!-- on u.id = a.uid ：条件两个id相等 -->
 
-    <!-- 保存用户 -->
+        select * from user u left outer join account a on u.id = a.uid
+    <!-- select * from user -->
+ </select>
+
+ <!-- 保存用户 -->
     <insert id="saveUser" parameterType="user" >
         <!-- 配置插入操作后，获取插入数据的id -->
         <!-- 新增用户后，同时还要返回当前新增用户的 id 值，因为 id 是由数据库的自动增长来实现的，所以就相 当于我们要在新增后将自动增长 auto_increment 的值返回。 -->

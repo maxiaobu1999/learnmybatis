@@ -10,6 +10,7 @@
         <result property="uid" column="uid"></result>
         <result property="money" column="money"></result>
         <!-- 一对一的关系映射：配置封装user的内容-->
+        <!--column="uid" 外键 根据这个获取user-->
         <association property="user" column="uid" javaType="user">
             <id property="userId" column="id"></id>
             <result column="username" property="userName"></result>
