@@ -1,70 +1,57 @@
 package com.norman.dao;
 
 import com.norman.domain.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
 /**
- * @author 黑马程序员
- * @Company http://www.ithiema.com
+ * 多表一对多
  * 在mybatis中针对,CRUD一共有四个注解
- *  @Select @Insert @Update @Delete
+ * @Select @Insert @Update @Delete
  */
+@CacheNamespace(blocking = true)//开启二级缓存
 public interface IUserDao {
 
     /**
      * 查询所有用户
-     * @return
+     * "@Result"：声明别名注解，column = 数据库，property = 实体类属性，id=true声明主键,
+     * "  @Results(id="userMap""声明，可以给其他方法用
      */
     @Select("select * from user")
+    @Results(id = "userMap", value = {
+            @Result(id = true, column = "id", property = "userId"),
+            @Result(column = "username", property = "userName"),
+            @Result(column = "address", property = "userAddress"),
+            @Result(column = "sex", property = "userSex"),
+            @Result(column = "birthday", property = "userBirthday"),
+            // @Many对多；FetchType.LAZY延迟加载，对多用
+            @Result(property = "accounts", column = "id",
+                    many = @Many(select = "com.norman.dao.IAccountDao.findAccountByUid",
+                            fetchType = FetchType.LAZY))
+    })
     List<User> findAll();
 
     /**
-     * 保存用户
-     * @param user
-     */
-    @Insert("insert into user(username,address,sex,birthday)values(#{username},#{address},#{sex},#{birthday})")
-    void saveUser(User user);
-
-    /**
-     * 更新用户
-     * @param user
-     */
-    @Update("update user set username=#{username},sex=#{sex},birthday=#{birthday},address=#{address} where id=#{id}")
-    void updateUser(User user);
-
-    /**
-     * 删除用户
-     * @param userId
-     */
-    @Delete("delete from user where id=#{id} ")
-    void deleteUser(Integer userId);
-
-    /**
      * 根据id查询用户
+     *
      * @param userId
      * @return
      */
     @Select("select * from user  where id=#{id} ")
+    @ResultMap(value = {"userMap"})//引用方式1
     User findById(Integer userId);
 
     /**
      * 根据用户名称模糊查询
+     *
      * @param username
      * @return
      */
-//    @Select("select * from user where username like #{username} ")
-    @Select("select * from user where username like '%${value}%' ")
+    @Select("select * from user where username like #{username} ")
+    @ResultMap("userMap")//引用方式1
     List<User> findUserByName(String username);
 
-    /**
-     * 查询总用户数量
-     * @return
-     */
-    @Select("select count(*) from user ")
-    int findTotalUser();
+
 }

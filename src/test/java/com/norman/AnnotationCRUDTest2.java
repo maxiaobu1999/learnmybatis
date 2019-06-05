@@ -11,14 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 
 /**
- * @author 黑马程序员
- * @Company http://www.ithiema.com
+ * curd 实体类属性-数据库列名（别名）
  */
-public class AnnotationCRUDTest {
+public class AnnotationCRUDTest2 {
     private InputStream in;
     private SqlSessionFactory factory;
     private SqlSession session;
@@ -39,32 +37,14 @@ public class AnnotationCRUDTest {
         in.close();
     }
 
-
     @Test
-    public void testSave(){
-//        User user = new User();
-//        user.setUsername("mybatis annotation");
-//        user.setAddress("北京市昌平区");
-//
-//        userDao.saveUser(user);
-    }
-
-    @Test
-    public void testUpdate(){
-//        User user = new User();
-//        user.setId(57);
-//        user.setUsername("mybatis annotation update");
-//        user.setAddress("北京市海淀区");
-//        user.setSex("男");
-//        user.setBirthday(new Date());
-//
-//        userDao.updateUser(user);
-    }
-
-
-    @Test
-    public void testDelete(){
-//        userDao.deleteUser(51);
+    public  void  testFindAll(){
+        List<User> users = userDao.findAll();
+        for(User user : users){
+            System.out.println("---每个用户的信息----");
+            System.out.println(user);
+            System.out.println(user.getAccounts());
+        }
     }
 
     @Test
@@ -76,16 +56,11 @@ public class AnnotationCRUDTest {
 
     @Test
     public  void testFindByName(){
-//        List<User> users = userDao.findUserByName("%mybatis%");
-        List<User> users = userDao.findUserByName("mybatis");
+        List<User> users = userDao.findUserByName("%mybatis%");
         for(User user : users){
             System.out.println(user);
         }
     }
 
-    @Test
-    public  void testFindTotal(){
-//        int total = userDao.findTotalUser();
-//        System.out.println(total);
-    }
+
 }
